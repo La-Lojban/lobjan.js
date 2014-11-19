@@ -1,27 +1,33 @@
+function Sumti() {
+}
+
 function Frame() {
   this.known = [];
+  this.variables = {};
 }
 
 Frame.prototype.declare = function(assertion) {
   this.known.push(assertion);
 }
 
+Frame.prototype.match = function(article, description) {
+  if (this.variables[description] === undefined) {
+    this.variables[description] = new Sumti();
+  }
+  return this.variables[description];
+}
+
 var root = new Frame();
 var scope = root;
 
-function Description(article, description) {
-  this.article = article;
-  this.description = description;
-}
-
 function le(description) {
-  return new Description('le', description);
+  return scope.match('le', description);
 }
 
 var the = le;
 
 function la(description) {
-return new Description('la', description);
+  return scope.match('la', description);
 }
 
 
